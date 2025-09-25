@@ -279,6 +279,6 @@ MIT (heredada de plantilla Laravel).
 ### Razón
 
 - Proyecto semestral de Ingeniería de Software II, Semestre 2025-2.
-- Presentado al docente: Jose Albeiro Montes Gíl.
+- Presentado al docente: Jose Albeiro Montes Gil.
 - Documento de planeación:
 - Informe de evidencia de ejecución de pruebas unitarias: 

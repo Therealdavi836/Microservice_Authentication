@@ -31,9 +31,8 @@ class AuthUser(HttpUser):
 
     @task(3)
     def logout(self):
-        """Prueba de logout"""
-        headers = {}
+        """Prueba de logout (requiere token)"""
         if self.token:
             headers = {"Authorization": f"Bearer {self.token}"}
+            self.client.post("/api/logout", headers=headers)
             self.token = None
-        self.client.post("/api/logout", headers=headers)

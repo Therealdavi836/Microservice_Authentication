@@ -20,3 +20,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
+// Rutas para pruebas con Locust (filtradas por IP)
+Route::middleware(['filter.ip'])->group(function () {
+    Route::post('/test/register', [AuthController::class, 'register']);
+    Route::post('/test/login', [AuthController::class, 'login']);
+});

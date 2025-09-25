@@ -65,8 +65,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
+    //Registramos el middleware en el nucelo del proyecto
     protected $routeMiddleware = [
-        // ...
         'filter.ip' => \App\Http\Middleware\FilterIP::class,
     ];
 

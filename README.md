@@ -260,11 +260,11 @@ Extensión sencilla: mover IPs a `.env` (ej: `LOAD_TEST_IPS=127.0.0.1,10.0.0.5`)
 
 | Problema | Causa Común | Solución |
 |----------|-------------|----------|
-| 419 / CSRF token mismatch | Uso indebido de cookies en API pura | Omite CSRF en API stateless; asegúrate de usar Authorization Bearer |
-| 401 credenciales inválidas | Email/contraseña erróneos | Verifica hash y migraciones ejecutadas |
-| 403 en /api/* | IP no incluida | Añade IP en middleware o ajusta lista blanca |
-| 500 al registrar | Migraciones/seeders faltan | Ejecuta `php artisan migrate --seed` |
-| Token no funciona | Header mal formado | Usa `Clave: Authorization: Valor:Bearer <token>` |
+| 419 / CSRF token mismatch | Uso indebido de cookies en API pura | Usar Authorization Bearer |
+| 401 credenciales inválidas | Email/contraseña erróneos | Verificar hash y migraciones ejecutadas |
+| 403 en /api/* | IP no incluida | Añadir IP en middleware o ajusta lista blanca |
+| 500 al registrar | Migraciones/seeders faltan | Ejecutar `php artisan migrate --seed` |
+| Token no funciona | Header mal formado | Usar `Clave: Authorization: Valor:Bearer <token>` |
 
 ### Licencia
 

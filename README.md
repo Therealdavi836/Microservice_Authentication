@@ -1,6 +1,6 @@
 # Microservice Authentication – Concesionario de Vehículos
 
-Este es un servicio de autenticación y gestión básica de identidades para un ecosistema modular (microservicios) de un aplicativo web de un concesionario de vehículos como parte del proyecto semestral de Ingeniería de Software II. Provee registro de usuarios, inicio/cierre de sesión mediante tokens personales (Laravel Sanctum), asignación automática de rol inicial, protección por middleware y soporte para pruebas unitarias. Está diseñado para operar de forma independiente y ser consumido por otros servicios pertenecientes del aplicativo bajo una arquitectura de microservicios propuesta para la construcción de este aplicativo.
+Este es un servicio de autenticación y gestión básica de identidades para un ecosistema modular (microservicios) de un aplicativo web de un concesionario de vehículos como parte del proyecto semestral de Ingeniería de Software II. Provee registro de usuarios, inicio/cierre de sesión mediante tokens personales (Laravel Sanctum), asignación automática de rol inicial, protección por middleware y soporte para pruebas unitarias. Está diseñado para operar de forma independiente y ser consumido por otros servicios pertenecientes del aplicativo bajo una arquitectura de microservicios propuesta.
 
 ---
 

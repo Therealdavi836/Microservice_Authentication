@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Role;
 use Illuminate\Validation\ValidationException;
 
 // Controlador para manejar el registro, inicio de sesión y cierre de sesión
@@ -20,12 +21,14 @@ class AuthController extends Controller
             'password' => 'required|string|min:8'
         ]);
 
++        $customerRole = Role::where('label', 'customer')->first();
+
         //Crea el usuario
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'customer' // Siempre asigna 'customer' por defecto, otros roles los asigna el admin
+            'role_id' => $customerRole->role->label// Siempre asigna 'customer' por defecto, otros roles los asigna el admin
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

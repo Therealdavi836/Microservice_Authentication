@@ -1,9 +1,10 @@
 #Creación de pruebas de rendimiento con Locust
 from locust import HttpUser, task, between
 
+#Clase usuario que simula las acciones de registro, login y logout
 class AuthUser(HttpUser):
     wait_time = between(1, 3)  # Tiempo aleatorio entre peticiones (simula usuarios reales)
-    token = None
+    token = None # Almacena el token de autenticación
 
     @task(1)
     def register(self):

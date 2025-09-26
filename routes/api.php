@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::middleware(['filter.ip'])->group(function () {
     Route::post('/test/register', [AuthController::class, 'register']);
     Route::post('/test/login', [AuthController::class, 'login']);
 });
+
+//Ruta de usuario con metodo get
+Route::get('/users', [UserController::class, 'users']);
+Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index']);

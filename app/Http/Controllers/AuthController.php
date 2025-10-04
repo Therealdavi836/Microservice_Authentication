@@ -66,4 +66,18 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Sesión cerrada']);
     }
+
+    //Obtener información del usuario autenticado
+   public function me(Request $request)
+    {
+        $user = $request->user()->load('role'); // Relación definida en User.php
+
+        return response()->json([
+            'id'      => $user->id,
+            'name'    => $user->name,
+            'email'   => $user->email,
+            'role_id' => $user->role_id,
+            'role'    => $user->role->name, // ← ahora devuelve el name
+        ]);
+    }
 }

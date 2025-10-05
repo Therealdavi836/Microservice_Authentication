@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use App\Models\Role;
 
@@ -32,6 +33,13 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        Http::post('http://127.0.0.1:8003/api/notifications/', [
+            'user_id' => $user->id,
+            'title' => 'Registro exitoso',
+            'message' => 'Tu cuenta ha sido creada exitosamente. ¡Bienvenido a ConcesionarioApp!',
+            'type' => 'info'
+        ]);
 
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }

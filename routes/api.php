@@ -22,12 +22,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me']);
 
-// Rutas para pruebas con Locust (filtradas por IP)
-Route::middleware(['filter.ip'])->group(function () {
-    Route::post('/test/register', [AuthController::class, 'register']);
-    Route::post('/test/login', [AuthController::class, 'login']);
-});
-
 //Ruta de usuario con metodo get
 Route::get('/users', [UserController::class, 'users']);
 Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index']);

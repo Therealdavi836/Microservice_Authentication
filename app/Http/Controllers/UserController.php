@@ -12,7 +12,7 @@ class UserController extends Controller
         // Solo usuarios admin pueden listar
         $user = $request->user();
 
-        if ($user->role_id !== 1) { // suponiendo 1001 = admin
+        if ($user->role_id !== 1) {
             return response()->json(['error' => 'No autorizado'], 403);
         }
 

@@ -1,18 +1,18 @@
-from locust import HttpUser, task, between
+from locust import HttpUser, task, between, constant
 import random
 
 class AuthUserLoadTest(HttpUser):
-    wait_time = between(1, 3)
-    token = None
+    # Sin tiempo de espera entre tareas
+    wait_time = constant(0)
 
-    @task(1)
-    def register(self):
-        """Simula el registro de nuevos usuarios"""
-        unique_email = f"user_{random.randint(1, 1000000)}@example.com"
+    def on_start(self):
+        """Cada usuario virtual se registra y guarda sus credenciales"""
+        self.email = f"user_{random.randint(1, 1000000)}@example.com"
+        self.password = "password123"
         payload = {
             "name": "Usuario Test",
-            "email": unique_email,
-            "password": "password123"
+            "email": self.email,
+            "password": self.password
         }
         with self.client.post("/api/register", json=payload, catch_response=True) as response:
             if response.status_code == 200:
@@ -20,12 +20,12 @@ class AuthUserLoadTest(HttpUser):
             else:
                 response.failure(f"Error en registro: {response.status_code}")
 
-    @task(2)
+    @task
     def login(self):
         """Simula el inicio de sesión"""
         payload = {
-            "email": "user_test@example.com",  # usuario existente
-            "password": "password123"
+            "email": self.email,
+            "password": self.password
         }
         with self.client.post("/api/login", json=payload, catch_response=True) as response:
             if response.status_code == 200:
@@ -35,10 +35,10 @@ class AuthUserLoadTest(HttpUser):
             else:
                 response.failure(f"Error en login: {response.status_code}")
 
-    @task(1)
+    @task
     def logout(self):
-        """Simula cierre de sesión solo si hay token"""
-        if self.token:
+        """Simula cierre de sesión"""
+        if hasattr(self, "token") and self.token:
             headers = {"Authorization": f"Bearer {self.token}"}
             with self.client.post("/api/logout", headers=headers, catch_response=True) as response:
                 if response.status_code == 200:

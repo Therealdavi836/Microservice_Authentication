@@ -1,43 +1,49 @@
-from locust import HttpUser, task, between
+from locust import HttpUser, task, constant
 import random
 
 class AuthUserCapacityTest(HttpUser):
-    wait_time = between(1, 2)
+    wait_time = constant(0)
     token = None
 
-    @task(1)
-    def register(self):
-        """Registro ocasional para mantener la base de datos"""
-        unique_email = f"user_{random.randint(1, 1000000)}@example.com"
+    def on_start(self):
+        """Cada usuario obtiene su email único"""
+        self.email = f"user_{random.randint(1, 100000)}@example.com"
+        self.password = "password123"
+        self.register_user()
+
+    def register_user(self):
+        """Se asegura que el usuario exista antes de hacer login"""
         payload = {
             "name": "Usuario Test",
-            "email": unique_email,
-            "password": "password123"
+            "email": self.email,
+            "password": self.password
         }
-        with self.client.post("/api/register", json=payload, catch_response=True) as response:
-            if response.status_code == 200:
-                response.success()
-            else:
-                response.failure(f"Error en registro: {response.status_code}")
+        self.client.post("/api/register", json=payload)
 
-    @task(2)
+    @task
     def login(self):
-        """Login constante para medir saturación del sistema"""
+        """Login masivo"""
         payload = {
-            "email": "user_test@example.com",
-            "password": "password123"
+            "email": self.email,
+            "password": self.password
         }
         with self.client.post("/api/login", json=payload, catch_response=True) as response:
             if response.status_code == 200:
-                data = response.json()
-                self.token = data.get("access_token")
-                response.success()
+                try:
+                    data = response.json()
+                    self.token = data.get("access_token") or data.get("token")
+                    if self.token:
+                        response.success()
+                    else:
+                        response.failure("Token no recibido")
+                except Exception:
+                    response.failure("Error parseando JSON del login")
             else:
                 response.failure(f"Error en login: {response.status_code}")
 
-    @task(1)
+    @task
     def logout(self):
-        """Logout si existe token"""
+        """Logout si el token existe"""
         if self.token:
             headers = {"Authorization": f"Bearer {self.token}"}
             with self.client.post("/api/logout", headers=headers, catch_response=True) as response:

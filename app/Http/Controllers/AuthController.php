@@ -39,7 +39,7 @@ class AuthController extends Controller
             'type' => 'info'
         ]);
 
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+        return response()->json(['message' => 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.', 201]);
     }
 
     //Iniciar sesión

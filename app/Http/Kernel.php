@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
     //Registramos el middleware en el nucelo del proyecto
     protected $routeMiddleware = [
         'filter.ip' => \App\Http\Middleware\FilterIP::class,
+        'checkrole' => \App\Http\Middleware\CheckRole::class,
     ];
 
 }
